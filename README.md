@@ -6,4 +6,4 @@
 * 스프링 시큐리티를 간단히 사용해본다.
 
 ## 출처
-https://www.youtube.com/playlist?list=PL93mKxaRDidECgjOBjPgI3Dyo8ka6Ilqm
+메타코딩, "Springboot - 나만의 블로그 만들기 동영상", https://www.youtube.com/playlist?list=PL93mKxaRDidECgjOBjPgI3Dyo8ka6Ilqm
