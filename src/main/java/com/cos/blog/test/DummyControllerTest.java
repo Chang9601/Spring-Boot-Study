@@ -6,10 +6,12 @@ import java.util.function.Supplier;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +35,20 @@ public class DummyControllerTest {
 	// save 함수는 ID를 전달 O -> 데이터 O -> UPDATE
 	// save 함수는 ID를 전달 O -> 데이터 X -> INSERT
 	// email, password
-	@Transactional
+	
+	@DeleteMapping("/dummy/user/{id}")
+	public String delete(@PathVariable int id) {
+		try {
+			userRepository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			return "삭제 실패. 해당 id 존재 X";
+		}
+		
+		return "삭제 완료. id: " + id;
+	}
+	
+	
+	@Transactional // 함수 종료 시 자동 commit 
 	@PutMapping("/dummy/user/{id}")
 	public User updateUser(@PathVariable int id, @RequestBody User requestUser) { // JSON 데이터 요청: Java Object(MessageConverter의 Jackson 라이브러리가 변환)
 		System.out.println("id:" + id);
@@ -49,7 +64,7 @@ public class DummyControllerTest {
 		//userRepository.save(user);
 		
 		// 더티 체킹
-		return null;
+		return user;
 	}
 	
 	// http://localhost:8000/blog/dummy/user	
@@ -83,7 +98,7 @@ public class DummyControllerTest {
 		User user = userRepository.findById(id).orElseThrow(new Supplier<IllegalArgumentException>() {
 			@Override
 			public IllegalArgumentException get() {
-				return new IllegalArgumentException("해당 유저 아이디 없음, id: " + id);
+				return new IllegalArgumentException("해당 사용자 아이디 없음, id: " + id);
 			}
 			
 		});
