@@ -17,7 +17,7 @@ public class UserApiController {
 	@Autowired
 	private UserService userService;
 	
-	@PostMapping("/api/user")
+	@PostMapping("/auth/joinProc")
 	public ResponseDto<Integer> save(@RequestBody User user) {
 		System.out.println("UserApiController: save 호출");
 		// DB에 INSERT 후 아래 반환
@@ -27,16 +27,6 @@ public class UserApiController {
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1); // 자바 객체를 JSON으로 변환해서 반환(Jackson)
 	}
 	
-	// 스프링 시큐리티 로그인
-	/*
-	 * @PostMapping("/api/user/login") public ResponseDto<Integer>
-	 * login(@RequestBody User user, HttpSession session) {
-	 * System.out.println("UserApiController: login 호출"); User principal =
-	 * userService.로그인(user); // principal: 접근주체
-	 * 
-	 * if(principal != null) { session.setAttribute("principal", principal); }
-	 * 
-	 * return new ResponseDto<Integer>(HttpStatus.OK.value(), 1); // 자바 객체를 JSON으로
-	 * 변환해서 반환(Jackson) }
-	 */
+	
+	
 }
