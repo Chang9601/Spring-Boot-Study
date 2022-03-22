@@ -9,12 +9,9 @@
 			<input type="text" name="username" class="form-control" placeholder="Enter username" id="username">
 		</div>
 		<div class="form-group">
-			<label for="pwd">Password</label> 
+			<label for="password">Password</label> 
 			<input type="password" name="password" class="form-control" placeholder="Enter password" id="password">
 		</div>
-		
-		
-		
 		<button id="btn-login" class="btn btn-primary">로그인</button>		
 	</form>
 </div>
