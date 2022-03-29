@@ -3,6 +3,10 @@ let index = {
 		$("#btn-save").on("click", () => { // function() {}, () => {} this 바인딩
 			this.save();
 		});
+		
+		$("#btn-update").on("click", () => { // function() {}, () => {} this 바인딩
+			this.update();
+		});
 	},
 
 	save: function() {
@@ -28,7 +32,29 @@ let index = {
 		}).fail(function(error) {
 			alert(JSON.stringify(error));
 		});
-	}
+	},
+	
+	update: function() {
+		let data = {
+			id: $("#id").val(),
+			username: $("#username").val(),
+			password: $("#password").val(),
+			email: $("#email").val()
+		};
+
+		$.ajax({
+			type: "PUT",
+			url: "/user",
+			contentType: "application/json; charset=UTF-8", // 요청 데이터의 MIME 타입
+			data: JSON.stringify(data), // 자바스크립트 객체 -> JSON 문자열, HTTP body
+			dataType: "json" // 응답 데이터의 타입, 기본적으로 모든 것은 문자열, JSON이면 자바스크립트 객체로 변경
+		}).done(function(resp) { // 응답 결과
+			alert("회원수정 완료");
+			location.href = "/";
+		}).fail(function(error) {
+			alert(JSON.stringify(error));
+		});
+	},
 }
 
 index.init();
