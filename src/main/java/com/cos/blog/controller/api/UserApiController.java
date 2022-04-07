@@ -41,6 +41,7 @@ public class UserApiController {
 		
 		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
+		
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1); // 자바 객체를 JSON으로 변환해서 반환(Jackson)
 	}
 }

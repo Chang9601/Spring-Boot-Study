@@ -17,6 +17,15 @@ public class UserService {
 
 	@Autowired
 	private BCryptPasswordEncoder encoder;
+
+	@Transactional(readOnly = true)
+	public User 회원찾기(String username) {
+		User user = userRepository.findByUsername(username).orElseGet(() -> {
+			return new User();
+		});
+		
+		return user;
+	}
 	
 	@Transactional
 	public void 회원가입(User user) {
@@ -37,11 +46,13 @@ public class UserService {
 			return new IllegalArgumentException("글 상세보기 실패: 아이디 없음");
 		});
 		
-		String rawPassword = user.getPassword();
-		String encPassword = encoder.encode(rawPassword);
-		
-		persistence.setPassword(encPassword);
-		persistence.setEmail(user.getEmail());
+		// Validation 확인: oAuth 값이 없으면 수정 가능
+		if(persistence.getOAuth() == null || persistence.getOAuth().equals("")) {
+			String rawPassword = user.getPassword();
+			String encPassword = encoder.encode(rawPassword);
+			persistence.setPassword(encPassword);	
+			persistence.setEmail(user.getEmail());			
+		}
 		// 회원수정 함수 종료 시 = 서비스 종료 = 트랜잭션 종료 = commit
 		// 영속화된 객체의 변화가 감지되면 더티체킹이 되어 update문 자동 전송
 	}

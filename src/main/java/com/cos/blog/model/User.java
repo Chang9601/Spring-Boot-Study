@@ -30,7 +30,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // 프로젝트에서 연결된 DB의 넘버링 전략을 따라간다.
 	private int id; // Oracle: 시퀀스, MySQL: auto_increment
 	
-	@Column(nullable = false, length = 30, unique = true)
+	@Column(nullable = false, length = 100, unique = true)
 	private String username;
 	
 	@Column(nullable = false, length = 100)
@@ -43,6 +43,8 @@ public class User {
 	// @ColumnDefault("'user'")
 	@Enumerated(EnumType.STRING)
 	private RoleType role; // Enum 사용 권고: admin, user, manager
+	
+	private String oAuth; // kakao, google 등
 	
 	@CreationTimestamp // 시간이 자동입력
 	private Timestamp createDate;	
