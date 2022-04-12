@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -48,6 +49,7 @@ public class Board {
 	
 	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER) // mappedBy 연관관계의 주인이 아니다. FK가 아니기 때문에 DB에 컬럼을 만들면 안된다.
 	@JsonIgnoreProperties({"board"})
+	@OrderBy("id desc")
 	private List<Reply> reply;
 	
 	@CreationTimestamp // 시간이 자동입력
