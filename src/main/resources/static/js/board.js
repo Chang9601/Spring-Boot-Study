@@ -77,19 +77,21 @@ let index = {
 	
 	replySave: function() {
 		let data = {
+			userId: $("#userId").val(),
+			boardId: $("#boardId").val(),
 			content: $("#reply-content").val()
 		};
 		let boardId = $("#boardId").val();
 		
 		$.ajax({
 			type: "POST",
-			url: `/api/board/${boardId}/reply`,
+			url: `/api/board/${data.boardId}/reply`,
 			contentType: "application/json; charset=UTF-8", 
 			data: JSON.stringify(data),
 			dataType: "json"
 		}).done(function(resp) { // 응답 결과
 			alert("댓글쓰기 완료");
-			location.href = `/board/${boardId}`;
+			location.href = `/board/${data.boardId}`;
 		}).fail(function(error) {
 			alert(JSON.stringify(error));
 		});
