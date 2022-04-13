@@ -21,9 +21,6 @@ public class BoardService {
 	private BoardRepository boardRepository;
 	
 	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
 	private ReplyRepository replyRepository;
 
 	@Transactional
@@ -64,21 +61,7 @@ public class BoardService {
 	
 	@Transactional
 	public void 댓글쓰기(ReplyDto replyDto) {
-		
-		Board board = boardRepository.findById(replyDto.getBoardId()).orElseThrow(() -> {
-			return new IllegalArgumentException("댓글 쓰기 실패: 게시글 ID 없음");
-		});
-		
-		User user = userRepository.findById(replyDto.getUserId()).orElseThrow(() -> {
-			return new IllegalArgumentException("댓글 쓰기 실패: 사용자 ID 없음");
-		});
-		
-		Reply reply = Reply.builder()
-				.board(board)
-				.user(user)
-				.content(replyDto.getContent())
-				.build();
-		
-		replyRepository.save(reply);
+		int result = replyRepository.mSave(replyDto.getUserId(), replyDto.getBoardId(), replyDto.getContent());
+		System.out.println("BoardService: " + result);
 	}
 }
