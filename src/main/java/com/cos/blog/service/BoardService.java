@@ -8,11 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.cos.blog.dto.ReplyDto;
 import com.cos.blog.model.Board;
-import com.cos.blog.model.Reply;
 import com.cos.blog.model.User;
 import com.cos.blog.repository.BoardRepository;
 import com.cos.blog.repository.ReplyRepository;
-import com.cos.blog.repository.UserRepository;
 
 // 스프링이 컴포넌트 스캔을 통해서 Bean에 등록, IoC
 @Service
@@ -41,7 +39,7 @@ public class BoardService {
 			return new IllegalArgumentException("글 상세보기 실패: 아이디 없음");
 		});
 	}
-
+	
 	@Transactional
 	public void 글삭제하기(int id) {
 		boardRepository.deleteById(id);
@@ -63,5 +61,10 @@ public class BoardService {
 	public void 댓글쓰기(ReplyDto replyDto) {
 		int result = replyRepository.mSave(replyDto.getUserId(), replyDto.getBoardId(), replyDto.getContent());
 		System.out.println("BoardService: " + result);
+	}
+	
+	@Transactional
+	public void 댓글삭제(int replyId) {
+		replyRepository.deleteById(replyId);
 	}
 }

@@ -26,7 +26,11 @@ let index = {
 			data: JSON.stringify(data), // 자바스크립트 객체 -> JSON 문자열, HTTP body
 			dataType: "json" // 응답 데이터의 타입, 기본적으로 모든 것은 문자열, JSON이면 자바스크립트 객체로 변경
 		}).done(function(resp) { // 응답 결과
-			alert("회원가입 완료");
+			if(resp.status === 500) {
+				alert("회원가입 실패");
+			} else {
+				alert("회원가입 완료");
+			}
 			//console.log(resp);
 			location.href = "/";
 		}).fail(function(error) {
